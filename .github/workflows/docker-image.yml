@@ -36,7 +36,7 @@ jobs:
 
       # FIX: Executable steps that use the configured cache layout to validate syntax stability
       - name: Verify Code Formatting
-        run: dotnet-format --verify-no-changes --severity warn
+        run: dotnet format --verify-no-changes --severity warn
      
       - name: Static Code Analysis
         run: dotnet build --configuration Release /warnaserror
