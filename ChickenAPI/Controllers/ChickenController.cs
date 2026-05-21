@@ -41,42 +41,42 @@ namespace ChickenAPI.Controllers
             _context.Chicken.Add(chicken);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new {id = chicken.ChickID}, chicken);
+            return CreatedAtAction(nameof(GetById), new { id = chicken.ChickID }, chicken);
         }
 
         //PUT: api/CHicken/{id}
-            public async Task<IActionResult> Update(int id, Chicken chicken)
+        public async Task<IActionResult> Update(int id, Chicken chicken)
+        {
+            if (id != chicken.ChickID)
+                return BadRequest();
+            _context.Entry(chicken).State = EntityState.Modified;
+
+            try
             {
-                if (id != chicken.ChickID) 
-                    return BadRequest();
-                _context.Entry(chicken).State = EntityState.Modified;
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Chicken.Any(e => e.ChickID == id))
-                        return NotFound();
-                    throw;
-                }
-
-                return NoContent();
-            }
-
-            // DELETE: api/Chicken/(id)
-            [HttpDelete("{id}")]
-            public async Task<IActionResult> Delete(int id)
-            {
-                var chicken = await _context.Chicken.FindAsync(id);
-                if (chicken == null)
-                    return NotFound();
-
-                _context.Chicken.Remove(chicken);
                 await _context.SaveChangesAsync();
-                
-                return NoContent();
             }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Chicken.Any(e => e.ChickID == id))
+                    return NotFound();
+                throw;
+            }
+
+            return NoContent();
+        }
+
+        // DELETE: api/Chicken/(id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var chicken = await _context.Chicken.FindAsync(id);
+            if (chicken == null)
+                return NotFound();
+
+            _context.Chicken.Remove(chicken);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

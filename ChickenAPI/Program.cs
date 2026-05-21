@@ -11,13 +11,13 @@ namespace ChickenAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddDbContext<FarmDbContext>(options => 
+            builder.Services.AddDbContext<FarmDbContext>(options =>
                 options.UseSqlServer(Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING")));
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-            
+
 
             var app = builder.Build();
 

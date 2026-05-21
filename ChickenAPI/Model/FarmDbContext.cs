@@ -6,7 +6,7 @@ namespace ChickenAPI.Model
 {
     public class FarmDbContext : DbContext
     {
-        public DbSet<Chicken> Chicken {get; set;}
+        public DbSet<Chicken> Chicken { get; set; }
 
         public FarmDbContext(DbContextOptions<FarmDbContext> options) : base(options) { }
 
@@ -15,7 +15,7 @@ namespace ChickenAPI.Model
             modelBuilder.Entity<Chicken>()
                 .Property(c => c.EggProduction)
                 .HasPrecision(5, 2); //set precision for decimal type meaning 5 total digits
-                                    // decimal places
+                                     // decimal places
         }
     }
 }
